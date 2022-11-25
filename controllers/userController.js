@@ -8,7 +8,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  //get one user//NOT WORKING
+  //get one user// WORKS
 
   getOneUser(req, res) {
     User.findOne({ _id: req.params.userId })
@@ -22,12 +22,14 @@ module.exports = {
       })
       .select("-__v")
       .then((user) =>
-        !course
+        !user
           ? res.status(404).json({ message: "No user with that ID" })
           : res.json(user)
       )
-      .catch((err) => res.status(500).json(err));
-    console.log(err);
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
 
   // Create a user///WORKS
@@ -67,22 +69,27 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // Create a friend
+  // Create a friend//WORKS
   createFriend(req, res) {
+    console.log("You are adding an friends");
+    console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friends: req.params.friendId } },
+      { $addToSet: { friends: req.body } },
       { runValidators: true, new: true }
     )
       .then((user) =>
         !user
-          ? res.status(404).json({ message: "No friend with this id!" })
+          ? res.status(404).json({ message: "No user with this id!" })
           : res.json(user)
       )
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
 
-  //delete a friend byt user id and then fruiend id
+  //delete a friend byt user id and then fruiend id//WORKS
   deleteFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -94,6 +101,9 @@ module.exports = {
           ? res.status(404).json({ message: "No friend with this id!" })
           : res.json(user)
       )
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
 };
