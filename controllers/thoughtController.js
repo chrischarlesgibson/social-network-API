@@ -1,14 +1,14 @@
 const { Thought, User } = require("../models");
 
 module.exports = {
-  //get all thoughts
+  //get all thoughts//WORKS
   getThoughts(req, res) {
     Thought.find()
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
 
-  // Get a thought by id
+  // Get a thought by id//WORKS
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .select("-__v")
@@ -44,7 +44,7 @@ module.exports = {
       .then((thought) => {
         console.log(thought);
         User.findOneAndUpdate(
-          { _id: req.body.userId },
+          { _id: thought.userId },
           { $addToSet: { thoughts: thought._id } },
           { new: true }
         );
