@@ -77,7 +77,7 @@ module.exports = {
       });
   },
 
-  //delete thought reaction
+  //delete thought reaction//WORKS but there is a reaction id and id so need to delte one
 
   deleteReaction(req, res) {
     Thought.findOneAndUpdate(
