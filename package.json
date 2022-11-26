@@ -9,10 +9,9 @@
     "seed": "node utils/seed"
   },
   "dependencies": {
-    "date-and-time": "^2.4.1",
+    "dayjs": "^1.11.6",
     "express": "^4.17.1",
-    "mongoose": "^6.0.13",
-    "mongoose-date-format-v2": "^1.2.2"
+    "mongoose": "^6.0.13"
   },
   "devDependencies": {
     "nodemon": "^2.0.9"

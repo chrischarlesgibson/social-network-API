@@ -1,7 +1,5 @@
 const { Schema, model, Types } = require("mongoose");
-const mongooseDateFormat = require("mongoose-date-format-v2");
-
-// const reaction = require("./reaction");
+const dayjs = require("dayjs");
 
 const reactionSchema = new Schema(
   {
@@ -22,6 +20,8 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
+      get: (dateCreated) =>
+        dayjs(dateCreated).format(`MMMM D YYYY [at] h:mm A`),
     },
   },
   {
@@ -43,6 +43,8 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
+      get: (dateCreated) =>
+        dayjs(dateCreated).format(`MMMM D YYYY [at] h:mm A`),
     },
     username: {
       type: String,
@@ -57,8 +59,8 @@ const thoughtSchema = new Schema(
     id: false,
   }
 );
-reactionSchema.plugin(mongooseDateFormat);
-thoughtSchema.plugin(mongooseDateFormat);
+// reactionSchema.plugin(mongooseDateFormat);
+// thoughtSchema.plugin(mongooseDateFormat);
 // Create a virtual property `reactioncount` that gets the amount of reactions for the thought
 thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
