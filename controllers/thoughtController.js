@@ -58,6 +58,17 @@ module.exports = {
       });
   },
 
+  //delete thought by id
+  deleteThought(req, res) {
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with that ID" })
+          : Thought.deleteMany({ _id: { $in: thought.reactions } })
+      )
+      .then(() => res.json({ message: "thought and it's reactions deleted!" }))
+      .catch((err) => res.status(500).json(err));
+  },
   // create reaction for a single thought//WORKS
   createReaction(req, res) {
     Thought.findOneAndUpdate(
